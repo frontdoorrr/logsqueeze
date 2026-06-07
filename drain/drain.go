@@ -72,17 +72,17 @@ type group struct {
 	tokens    []string
 	count     int
 	samples   []string
-	slots     [][]string   // distinct string samples per token position
-	numVals   [][]float64  // all numeric values per token position (for stats)
+	slots     [][]string  // distinct string samples per token position
+	numVals   [][]float64 // all numeric values per token position (for stats)
 	numUnits  []map[string]int
 	firstSeen string
 }
 
 type xdrain struct {
-	cfg      Config
-	trees    []*prefixNode // one tree per rotation
-	nextID   int
-	groups   map[int]*group
+	cfg    Config
+	trees  []*prefixNode // one tree per rotation
+	nextID int
+	groups map[int]*group
 }
 
 const rotations = 2
