@@ -119,13 +119,13 @@ func (x *xdrain) addLine(line LogLine) {
 	// Collect votes from each rotation.
 	votes := make(map[int]int)
 	for r := 0; r < rotations; r++ {
-		gid := x.findMatch(x.trees[r], rotate(tokens, r))
+		gid := x.findMatch(x.trees[r], rotate(tokens, r), r)
 		if gid >= 0 {
 			votes[gid]++
 		}
 	}
 
-	// Pick the group with the most votes (or create one via rotation 0).
+	// Pick the group with the most votes (or create one across all trees).
 	winner := -1
 	bestVotes := 0
 	for gid, v := range votes {
@@ -138,24 +138,24 @@ func (x *xdrain) addLine(line LogLine) {
 	if winner >= 0 {
 		x.mergeGroup(x.groups[winner], tokens, line)
 	} else {
-		// No match in any rotation: create a new group via rotation-0 tree.
-		x.insertNew(x.trees[0], tokens, line)
+		x.insertNew(tokens, line)
 	}
 }
 
-// findMatch walks the tree for the given (possibly rotated) tokens and returns
-// the best matching group ID, or -1 if no match exceeds SimTh.
-func (x *xdrain) findMatch(root *prefixNode, tokens []string) int {
-	node := x.routeToLeaf(root, tokens, false)
+// findMatch walks tree[r] using rotatedTokens and returns the best matching
+// group ID, comparing rotate(g.tokens, r) against rotatedTokens so both sides
+// are in the same rotated frame.
+func (x *xdrain) findMatch(root *prefixNode, rotatedTokens []string, r int) int {
+	node := x.routeToLeaf(root, rotatedTokens, false)
 	if node == nil {
 		return -1
 	}
 	best, bestSim := -1, -1.0
 	for _, g := range node.groups {
-		if len(g.tokens) != len(tokens) {
+		if len(g.tokens) != len(rotatedTokens) {
 			continue
 		}
-		sim := similarity(g.tokens, tokens)
+		sim := similarity(rotate(g.tokens, r), rotatedTokens)
 		if sim > bestSim {
 			bestSim = sim
 			best = g.id
@@ -167,9 +167,9 @@ func (x *xdrain) findMatch(root *prefixNode, tokens []string) int {
 	return -1
 }
 
-// insertNew creates a new group and inserts it into the rotation-0 tree.
-func (x *xdrain) insertNew(root *prefixNode, tokens []string, line LogLine) {
-	node := x.routeToLeaf(root, tokens, true)
+// insertNew creates a new group and registers it in every rotation tree so all
+// rotations can vote on future lines.
+func (x *xdrain) insertNew(tokens []string, line LogLine) {
 	id := x.nextID
 	x.nextID++
 
@@ -192,7 +192,12 @@ func (x *xdrain) insertNew(root *prefixNode, tokens []string, line LogLine) {
 		samples:   appendSample(nil, line.Message, x.cfg.SampleCap),
 	}
 	x.groups[id] = g
-	node.groups = append(node.groups, g)
+
+	// Register in every rotation tree using the rotated routing key.
+	for r := 0; r < rotations; r++ {
+		node := x.routeToLeaf(x.trees[r], rotate(tokens, r), true)
+		node.groups = append(node.groups, g)
+	}
 }
 
 // routeToLeaf navigates (and optionally creates) prefix nodes.

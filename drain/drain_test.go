@@ -110,6 +110,32 @@ func TestRender(t *testing.T) {
 	}
 }
 
+// TestRotationHelps verifies that token rotation allows grouping lines where
+// only the first token varies and the remaining tokens are stable.
+//
+// For "pod-X conn failed" (3 tokens, depth=2):
+//   - tree[0] routes on ["pod-X", "conn"] → different leaves per pod → cannot group
+//   - tree[1] routes on rotate(t,1)[0:2] = ["conn","failed"] → same leaf for all → groups correctly
+func TestRotationHelps(t *testing.T) {
+	cfg := DefaultConfig()
+	cfg.BatchSize = 20
+
+	input := lines(
+		"pod-abc conn failed",
+		"pod-def conn failed",
+		"pod-ghi conn failed",
+		"pod-jkl conn failed",
+		"pod-mno conn failed",
+	)
+	r := Analyze(input, cfg)
+	if r.TemplateCount != 1 {
+		t.Fatalf("rotation should merge variable-prefix lines into 1 template, got %d", r.TemplateCount)
+	}
+	if !strings.Contains(r.Groups[0].Template, wildcard) {
+		t.Errorf("expected wildcard in template, got %q", r.Groups[0].Template)
+	}
+}
+
 func TestFormatLargeNum(t *testing.T) {
 	cases := []struct{ n int; want string }{
 		{0, "0"},
