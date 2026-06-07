@@ -31,3 +31,5 @@ go.work.sum
 # .idea/
 # .vscode/
 request.md
+CLAUDE.local.md
+.claude/settings.local.json
