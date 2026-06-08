@@ -8,9 +8,9 @@ import (
 	mcpgo "github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
-	"github.com/jeongmun-lee/logsqueeze/drain"
-	"github.com/jeongmun-lee/logsqueeze/parser"
-	"github.com/jeongmun-lee/logsqueeze/source"
+	"github.com/frontdoorrr/logsqueeze/drain"
+	"github.com/frontdoorrr/logsqueeze/parser"
+	"github.com/frontdoorrr/logsqueeze/source"
 )
 
 // Serve starts the MCP stdio server and blocks until stdin closes.

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/jeongmun-lee/logsqueeze/mcp"
+	"github.com/frontdoorrr/logsqueeze/mcp"
 )
 
 const usage = `logsqueeze - log compression MCP server

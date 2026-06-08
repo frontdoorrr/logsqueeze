@@ -2,7 +2,7 @@
 
 # logsqueeze
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/jeongmun-lee/logsqueeze.svg)](https://pkg.go.dev/github.com/jeongmun-lee/logsqueeze)
+[![Go Reference](https://pkg.go.dev/badge/github.com/frontdoorrr/logsqueeze.svg)](https://pkg.go.dev/github.com/frontdoorrr/logsqueeze)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 Claude Code와 모든 MCP 호환 에이전트를 위한 로그 압축 도구.
@@ -37,7 +37,7 @@ Compressed 1,200,000 lines → 12 templates (100,000x compression)
 ## 설치
 
 ```bash
-go install github.com/jeongmun-lee/logsqueeze@latest
+go install github.com/frontdoorrr/logsqueeze@latest
 ```
 
 ---

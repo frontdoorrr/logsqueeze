@@ -2,7 +2,7 @@
 
 # logsqueeze
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/jeongmun-lee/logsqueeze.svg)](https://pkg.go.dev/github.com/jeongmun-lee/logsqueeze)
+[![Go Reference](https://pkg.go.dev/badge/github.com/frontdoorrr/logsqueeze.svg)](https://pkg.go.dev/github.com/frontdoorrr/logsqueeze)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 Drop-in log compression for Claude Code and any MCP-compatible agent.
@@ -37,7 +37,7 @@ Each `<*>` slot summarizes what varied in that position: numeric ranges with p50
 ## Install
 
 ```bash
-go install github.com/jeongmun-lee/logsqueeze@latest
+go install github.com/frontdoorrr/logsqueeze@latest
 ```
 
 ---

@@ -1,4 +1,4 @@
-module github.com/jeongmun-lee/logsqueeze
+module github.com/frontdoorrr/logsqueeze
 
 go 1.25.5
 

@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/jeongmun-lee/logsqueeze/drain"
+	"github.com/frontdoorrr/logsqueeze/drain"
 )
 
 var (
