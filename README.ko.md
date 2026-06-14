@@ -2,6 +2,7 @@
 
 # logsqueeze
 
+[![CI](https://github.com/frontdoorrr/logsqueeze/actions/workflows/ci.yml/badge.svg)](https://github.com/frontdoorrr/logsqueeze/actions/workflows/ci.yml)
 [![Go Reference](https://pkg.go.dev/badge/github.com/frontdoorrr/logsqueeze.svg)](https://pkg.go.dev/github.com/frontdoorrr/logsqueeze)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
