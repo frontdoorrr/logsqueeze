@@ -33,3 +33,6 @@ go.work.sum
 request.md
 CLAUDE.local.md
 .claude/settings.local.json
+
+# golangci-lint
+.golangci-lint-cache/
