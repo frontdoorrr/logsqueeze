@@ -7,10 +7,14 @@ import (
 	"github.com/frontdoorrr/logsqueeze/mcp"
 )
 
+const version = "0.1.0"
+
 const usage = `logsqueeze - log compression MCP server
 
 Usage:
-  logsqueeze mcp serve   Start MCP stdio server
+  logsqueeze mcp serve       Start MCP stdio server
+  logsqueeze version         Print version
+  logsqueeze --version, -v   Print version
 
 Add to ~/.claude.json:
   {
@@ -24,12 +28,20 @@ Add to ~/.claude.json:
 `
 
 func main() {
-	if len(os.Args) >= 3 && os.Args[1] == "mcp" && os.Args[2] == "serve" {
-		if err := mcp.Serve(); err != nil {
-			fmt.Fprintf(os.Stderr, "logsqueeze: %v\n", err)
-			os.Exit(1)
+	if len(os.Args) >= 2 {
+		switch os.Args[1] {
+		case "mcp":
+			if len(os.Args) >= 3 && os.Args[2] == "serve" {
+				if err := mcp.Serve(); err != nil {
+					fmt.Fprintf(os.Stderr, "logsqueeze: %v\n", err)
+					os.Exit(1)
+				}
+				return
+			}
+		case "version", "--version", "-v":
+			fmt.Println("logsqueeze v" + version)
+			return
 		}
-		return
 	}
 	fmt.Print(usage)
 }
