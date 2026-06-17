@@ -61,11 +61,6 @@ func TestDistinctMessages(t *testing.T) {
 func TestNumericSlotSummary(t *testing.T) {
 	cfg := DefaultConfig()
 	cfg.BatchSize = 100
-	var msgs []string
-	for i := 10; i <= 100; i += 10 {
-		msgs = append(msgs, "latency "+strings.Repeat("", 0)+strings.Replace("NNNms", "NNN", strings.TrimSpace(strings.Repeat("0", 0)+string(rune('0'+i/10))), 1))
-	}
-	// simpler: just use literal
 	input := lines(
 		"pool acquire 20ms",
 		"pool acquire 40ms",
@@ -137,7 +132,10 @@ func TestRotationHelps(t *testing.T) {
 }
 
 func TestFormatLargeNum(t *testing.T) {
-	cases := []struct{ n int; want string }{
+	cases := []struct {
+		n    int
+		want string
+	}{
 		{0, "0"},
 		{999, "999"},
 		{1000, "1,000"},
