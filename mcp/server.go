@@ -14,10 +14,10 @@ import (
 )
 
 // Serve starts the MCP stdio server and blocks until stdin closes.
-func Serve() error {
+func Serve(version string) error {
 	s := server.NewMCPServer(
 		"logsqueeze",
-		"0.1.0",
+		version,
 		server.WithToolCapabilities(false),
 	)
 

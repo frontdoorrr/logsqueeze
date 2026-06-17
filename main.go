@@ -32,7 +32,7 @@ func main() {
 		switch os.Args[1] {
 		case "mcp":
 			if len(os.Args) >= 3 && os.Args[2] == "serve" {
-				if err := mcp.Serve(); err != nil {
+				if err := mcp.Serve(version); err != nil {
 					fmt.Fprintf(os.Stderr, "logsqueeze: %v\n", err)
 					os.Exit(1)
 				}
